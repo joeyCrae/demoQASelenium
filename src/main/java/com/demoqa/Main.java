@@ -131,18 +131,19 @@ public class Main {
 
         //
 
-//        sleep();
+        sleep();
         driver.quit();
     }
 
 
-//    private static void sleep() {
-//        try {
-//            Thread.sleep(5000);
-//        } catch (InterruptedException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
+    private static void sleep() {
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 
 }
+
