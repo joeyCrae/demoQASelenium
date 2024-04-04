@@ -96,6 +96,44 @@ public class Main {
 //        driver.quit();
     }
 
+    @Test(priority = 2, groups = { "elemnetsTests", "mainPriority"})
+    public void CheckBox(){
+        sleep();
+        //Check Box
+        WebElement item2 = driver.findElement(By.id("item-1"));
+
+        //Assert that item 2 is visible
+        Assert.assertTrue(item2.isDisplayed(),"Item is not Displayed");
+
+        //Click item 2
+        item2.click();
+
+        //Get the dropdown svg
+        WebElement dropdown = driver.findElement(By.xpath("//button[@title='Toggle']//*[name()='svg']"));
+        Assert.assertTrue(dropdown.isDisplayed());
+
+        //Click the svg
+        dropdown.click();
+
+        //Select the Downloads Check Box
+        sleep();
+        WebElement downloads = driver.findElement(By.cssSelector("[for='tree-node-downloads']"));
+
+        //Click Download check box
+        downloads.click();
+
+        //Assert that the success message
+        WebElement successMsg = driver.findElement(By.id("result"));
+        String expectedMsg = "You have selected :\n" +
+                "downloads\n" +
+                "wordFile\n" +
+                "excelFile";
+        String actualMsg = successMsg.getText();
+        Assert.assertTrue(actualMsg.contains(expectedMsg),"Actual message and expected message are not equal");
+
+        sleep();
+    }
+
     private static void sleep() {
         try {
             Thread.sleep(5000);
