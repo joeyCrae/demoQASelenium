@@ -134,6 +134,44 @@ public class Main {
         sleep();
     }
 
+    @Test(priority = 3, groups = { "elemnetsTests"})
+    public void RadioButton() throws InterruptedException{
+        sleep();
+        //Radio Button
+        WebElement item3 = driver.findElement(By.id("item-2"));
+
+        //Assert that item 3 is visible
+        Assert.assertTrue(item3.isDisplayed(),"Item is not Displayed");
+
+        //Click item 3
+        item3.click();
+
+        //Assert that the question is visible
+        WebElement question = driver.findElement(By.className("mb-3"));
+        String expectedQuestion = "Do you like the site?";
+        String actualQuestion = question.getText();
+        Assert.assertTrue(actualQuestion.contains(expectedQuestion), "Expected, 'Do you like the site?' to be found but couldn't find it");
+
+        //Selecting yes
+        JavascriptExecutor executor = (JavascriptExecutor) driver;
+        Thread.sleep(3000);
+        executor.executeScript("document.querySelector('#yesRadio')");
+        WebElement yesRadio = driver.findElement(By.cssSelector("label[for='yesRadio']"));
+        yesRadio.click();
+
+        //Get the labeled that is displayed
+        WebElement pTags = driver.findElement(By.cssSelector("p.mt-3"));
+
+        String expectedMsg = "You have selected Yes";
+        String actualMsg = pTags.getText();
+
+        //Asserting that the radio button is selected
+        Assert.assertTrue(actualMsg.contains(expectedMsg), "Actual Message does not match the Expected Message");
+        System.out.println("This assertion passed");
+
+        sleep();
+    }
+
     private static void sleep() {
         try {
             Thread.sleep(5000);
