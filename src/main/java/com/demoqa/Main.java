@@ -172,6 +172,94 @@ public class Main {
         sleep();
     }
 
+    @Test
+    public void  WebTables() throws InterruptedException{
+        sleep();
+        //Web Tables
+        WebElement item4 = driver.findElement(By.id("item-3"));
+
+        //Assert that item 4 is visible
+        Assert.assertTrue(item4.isDisplayed(),"Item is not Displayed");
+
+        //Click item 4
+        item4.click();
+
+        //Selecting Header rows
+        WebElement headerRow = driver.findElement(By.className("rt-tr"));
+        Assert.assertTrue(headerRow.isDisplayed());
+
+        //Locating the first parent row
+        WebElement firstParentRow = driver.findElement(By.xpath("//*[@id=\"app\"]/div/div/div/div[2]/div[2]/div[3]/div[1]/div[2]/div[1]/div"));
+        Assert.assertTrue(firstParentRow.isDisplayed());
+
+        //Locating the child element Cierra and Vega
+        WebElement childOne = firstParentRow.findElement(By.xpath("//*[@id=\"app\"]/div/div/div/div[2]/div[2]/div[3]/div[1]/div[2]/div[1]/div/div[1]"));
+        String childOneText = childOne.getText();
+        System.out.println(childOneText);
+        Assert.assertTrue(childOne.isDisplayed());
+
+
+        WebElement childTwo = firstParentRow.findElement(By.xpath("//*[@id=\"app\"]/div/div/div/div[2]/div[2]/div[3]/div[1]/div[2]/div[1]/div/div[2]"));
+        String childTwoText = childTwo.getText();
+        System.out.println(childTwoText);
+        Assert.assertTrue(childTwo.isDisplayed());
+
+        //Editing the first Parent row and changing the name text of Cierra to Andrade
+        WebElement edit = driver.findElement(By.id("edit-record-1"));
+        WebElement searchBar = driver.findElement(By.id("searchBox"));
+        WheelInput.ScrollOrigin scrollOrigin = WheelInput.ScrollOrigin.fromElement(searchBar);
+        new Actions(driver)
+                .scrollFromOrigin(scrollOrigin, 0, 200)
+                .perform();
+        edit.click();
+
+        //Assert that the modal appears
+        WebElement modal = driver.findElement(By.className("modal-content"));
+        Assert.assertTrue(modal.isDisplayed());
+
+        //Locate the First Name a field and change the value to Andrade and save
+        WebElement firstName = modal.findElement(By.id("firstName"));
+
+        //Clear the content first
+        firstName.clear();
+
+        //Type in Andrade (new name text)
+        firstName.sendKeys("Andrade");
+        WebElement submit = modal.findElement(By.id("submit"));
+        Assert.assertTrue(submit.isEnabled());
+        Thread.sleep(2000);
+        submit.click();
+
+        String expectedText = "Andrade";
+        String childOneNewText = childOne.getText();
+        Assert.assertTrue(childOneNewText.contains(expectedText),"The new text Andrade was not updated");
+        System.out.println(childOneNewText);
+
+        //Locating the item 3 and deleting it
+        //Assert that item 4 is visible
+        Assert.assertTrue(item4.isDisplayed(),"Item is not Displayed");
+
+        //Click item 4
+        item4.click();
+
+        //Selecting Header rows
+        Assert.assertTrue(headerRow.isDisplayed());
+        List<WebElement> rowGroup = driver.findElements(By.cssSelector("[role=\"row\"]"));
+        System.out.println(rowGroup.size());
+        for(WebElement e : rowGroup){
+            System.out.println(e.getText());
+
+            if(e.getText().equalsIgnoreCase("Alden")){
+                driver.findElement(By.cssSelector("id='delete-record-3']")).click();
+
+            }
+
+
+        }
+
+    }
+
+
     private static void sleep() {
         try {
             Thread.sleep(5000);
