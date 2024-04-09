@@ -259,6 +259,69 @@ public class Main {
 
     }
 
+    @Test
+    public void Buttons() throws InterruptedException{
+        sleep();
+        //Buttons
+        WebElement item5 = driver.findElement(By.id("item-4"));
+
+        //Assert that item 5 is visible
+        Assert.assertTrue(item5.isDisplayed(),"Item is not Displayed");
+
+        //Click item 5
+        item5.click();
+
+        //Double Click
+        WebElement dbclickBtn = driver.findElement(By.id("doubleClickBtn"));
+        Assert.assertTrue(dbclickBtn.isEnabled());
+        new Actions(driver)
+                .doubleClick(dbclickBtn)
+                .perform();
+
+        //Asserting the double Click Message
+        String dbExpectedMessage = "You have done a double click";
+        WebElement dbMessage = driver.findElement(By.id("doubleClickMessage"));
+        String dbActualMessage = dbMessage.getText();
+        Assert.assertTrue(dbActualMessage.contains(dbExpectedMessage),"Actual message is different from expected message ");
+
+        //Right Click
+        sleep();
+        WebElement rightClickBtn = driver.findElement(By.id("rightClickBtn"));
+        Assert.assertTrue(rightClickBtn.isEnabled());
+        new Actions(driver)
+                .contextClick(rightClickBtn)
+                .perform();
+
+        //Asserting the Right Click Message
+        sleep();
+        String rcExpectedMessage = "You have done a right click";
+        WebElement rcMessage = driver.findElement(By.id("rightClickMessage"));
+        String rcActualMessage = rcMessage.getText();
+        Assert.assertTrue(rcActualMessage.contains(rcExpectedMessage),"Actual message is different from expected message ");
+
+
+        //Normal Click
+        sleep();
+        List <WebElement> buttons = driver.findElements(By.cssSelector("[type=\"button\"]"));
+        WebElement clickBtn = buttons.get(3);
+        WheelInput.ScrollOrigin scrollOrigin = WheelInput.ScrollOrigin.fromElement(rightClickBtn);
+        new Actions(driver)
+                .scrollFromOrigin(scrollOrigin, 0, 200)
+                .click(clickBtn)
+                .perform();
+
+        Assert.assertTrue(clickBtn.isEnabled());
+
+        //Asserting the Normal Click Message
+        sleep();
+        String ncExpectedMessage = "You have done a dynamic click";
+        WebElement ncMessage = driver.findElement(By.id("dynamicClickMessage"));
+        String ncActualMessage = ncMessage.getText();
+        Assert.assertTrue(ncActualMessage.contains(ncExpectedMessage),"Actual message is different from expected message ");
+
+        sleep();
+    }
+
 
 
     private static void sleep() {
